@@ -7,8 +7,9 @@
 
 //edit these details
 //$url = "http://ventrilostatus.net/xml/server:port/";
-$url = "http://ventrilostatus.net/xml/nitrogen.typefrag.com:11101/";
+$url = "http://vent.64bits.co/status/nitrogen.typefrag.com:11101/";
 $show_ping_times = false;
+$show_phantoms = true;
 $invert_color = true;
 $space = "    ";
 
@@ -33,7 +34,7 @@ $colors = array(
 //print_r($base);
 
 function printChild($array, $depth = 0) {
-	global $show_ping_times, $invert_color, $colors, $space;
+	global $show_ping_times, $show_phantoms, $invert_color, $colors, $space;
 	
 	if ($invert_color == true){
 		$base_color = $colors['white'];
@@ -53,13 +54,16 @@ function printChild($array, $depth = 0) {
 		print(str_repeat($space, $depth).$protected.$base_color.$child['name'].$base_reset." "."\n");
 		}
 		elseif ($child->getName() == "client") {
+			if ($show_phantoms == true && $child['phan'] == '1'){
+				$phantom = $colors["purple"]."[P] ".$child['reset'];
+			}
 			if ($show_ping_times == true){
 				$ping = $colors["green"]." [".$child['ping']."ms".$child['reset']."]";
 			}
 			else{
 				$ping = '';
 			}
-		print(str_repeat($space, $depth).$colors["bold"]." ".$base_color.$child['name'].$base_reset.$ping."\n".$colors["reset"]);
+		print(str_repeat($space, $depth).$colors["bold"]." ".$phantom.$base_color.$child['name'].$base_reset.$ping."\n".$colors["reset"]);
 		}
 				
 		printChild($child, $depth+1);
