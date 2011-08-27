@@ -1,12 +1,12 @@
 <?php
 //geektool-vent.php
-//version 1.0
+//version 1.1
 //created by kyletxag and benphelps
 //download at pixelsoak.com
 //uses geektool to monitor vent status using ventrilostatus.net
 
 //edit these details
-//$url = "http://ventrilostatus.net/xml/server:port/";
+//$url = "http://vent.64bits.co/status/server:port/";
 $url = "http://vent.64bits.co/status/nitrogen.typefrag.com:11101/";
 $show_ping_times = false;
 $show_phantoms = true;
@@ -54,8 +54,11 @@ function printChild($array, $depth = 0) {
 		print(str_repeat($space, $depth).$protected.$base_color.$child['name'].$base_reset." "."\n");
 		}
 		elseif ($child->getName() == "client") {
-			if ($show_phantoms == true && $child['phan'] == '1'){
+			if ($show_phantoms == true && $child['phan'] == '1') {
 				$phantom = $colors["purple"]."[P] ".$child['reset'];
+			}
+			else {
+				$phantom = "";
 			}
 			if ($show_ping_times == true){
 				$ping = $colors["green"]." [".$child['ping']."ms".$child['reset']."]";
